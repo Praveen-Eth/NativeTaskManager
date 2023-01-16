@@ -23,6 +23,11 @@ public class RvTaskAdapter extends RecyclerView.Adapter<ViewModel> {
         this.todos = todos;
     }
 
+    public void addTodo(Card_View_Properties todo){
+        todos.add(todo);
+        notifyItemInserted(todos.size()-1);
+    }
+
     @NonNull
     @Override
     public ViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,6 +43,7 @@ public class RvTaskAdapter extends RecyclerView.Adapter<ViewModel> {
         tv.setText(todos.get(position).TaskName);
         CheckBox cb =holder.itemView.findViewById(R.id.checkboxDone);
         cb.setChecked(todos.get(position).isChecked);
+
 
 
     }
