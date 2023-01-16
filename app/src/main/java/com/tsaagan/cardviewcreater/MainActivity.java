@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         todo.add(new Card_View_Properties("wash clothes",true));
 
 
-         button = (Button) findViewById(R.id.button);
+        
          recyclerView  = findViewById(R.id.recyclerView);
          recyclerView.setLayoutManager(new LinearLayoutManager(this));
          recyclerView.setAdapter(new RvTaskAdapter(todo));
