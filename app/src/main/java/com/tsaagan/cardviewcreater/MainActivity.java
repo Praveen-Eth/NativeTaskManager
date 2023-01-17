@@ -34,27 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
          LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearlayout);
          List<Card_View_Properties> todo = new ArrayList<>();
-         todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-        todo.add(new Card_View_Properties("wash clothes",true));
-
 
         
          recyclerView  = findViewById(R.id.recyclerView);
@@ -62,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
          Dialog popup = new Dialog(this);
          popup.setContentView(R.layout.popup_assign_task);
          recyclerView.setLayoutManager(new LinearLayoutManager(this));
-         recyclerView.setAdapter(new RvTaskAdapter(todo));
+        RvTaskAdapter obj = new RvTaskAdapter(todo);
+         recyclerView.setAdapter(obj);
 
          //Views that  are inside the popup
          setTimer = (Button) popup.findViewById(R.id.timer_button);
@@ -83,9 +63,8 @@ public class MainActivity extends AppCompatActivity {
                  flag.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
-                         //bug on below codek
-                         RvTaskAdapter obj = new RvTaskAdapter(todo);
                          obj.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false));
+                         popupEditBox.setText(null);
                          popup.dismiss();
                      }
                  });
@@ -93,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                  popupExit.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
+                         popupEditBox.setText(null);
                          popup.dismiss();
                      }
                  });

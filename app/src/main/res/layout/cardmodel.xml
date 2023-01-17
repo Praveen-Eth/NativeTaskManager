@@ -17,6 +17,17 @@
 
         >
 
+        <ImageButton
+            android:id="@+id/task_Delete_Button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:padding="16dp"
+            android:background="@color/white"
+            android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
         <CheckBox
             android:id="@+id/checkboxDone"
             android:layout_width="wrap_content"
@@ -26,7 +37,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="75dp"
             android:layout_marginTop="10dp"
             android:id="@+id/checkboxText"
 

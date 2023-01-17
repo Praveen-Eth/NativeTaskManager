@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RvTaskAdapter extends RecyclerView.Adapter<ViewModel> {
+public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
 
     public  List<Card_View_Properties> todos ;
 
@@ -30,20 +31,33 @@ public class RvTaskAdapter extends RecyclerView.Adapter<ViewModel> {
 
     @NonNull
     @Override
-    public ViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardmodel,parent,false);
 
-        return new ViewModel(view);
+        return new RvViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewModel holder, int position) {
+    public void onBindViewHolder(@NonNull RvViewHolder holder, int position) {
         TextView tv = holder.itemView.findViewById(R.id.checkboxText);
         tv.setText(todos.get(position).TaskName);
         CheckBox cb =holder.itemView.findViewById(R.id.checkboxDone);
         cb.setChecked(todos.get(position).isChecked);
-
+        ImageButton ib = holder.itemView.findViewById(R.id.task_Delete_Button);
+        try {
+            ib.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // todo : bug on position index
+                    todos.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
+        }catch (Exception e){
+            todos.remove(todos.size()-1);
+            notifyItemRemoved(todos.size()-1);
+        }
 
 
     }
