@@ -33,10 +33,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.54" />
 
+    <ListView
+        android:id="@+id/list_item"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="16dp"
+        android:divider="@color/purple_200"
+        android:dividerHeight="1dp"
+        android:elevation="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearlayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:visibility="gone"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/black"
+
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/floatingButton"
         android:src="@android:drawable/ic_input_add"
         android:tint="#EACDCD"
         app:backgroundTint="#CB34E4"
@@ -46,20 +72,20 @@
         app:rippleColor="#FFFFFF" />
 
     <LinearLayout
+        android:id="@+id/linearlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="35dp"
         android:layout_marginTop="90dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginEnd="60dp"
         android:layout_marginBottom="50dp"
-        android:id="@+id/linearlayout"
-        android:orientation="vertical"
         android:background="@color/home_page_background"
-        >
+        android:orientation="vertical">
+
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerView"
 
             android:elevation="30dp"
             android:hapticFeedbackEnabled="true"
@@ -68,10 +94,15 @@
             />
 
 
-
     </LinearLayout>
 
-
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.26"
+         />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

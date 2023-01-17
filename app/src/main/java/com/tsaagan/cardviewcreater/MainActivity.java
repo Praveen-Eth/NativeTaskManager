@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -26,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     EditText popupEditBox;
     Button setTimer,flag;
     ImageButton popupExit;
+    ListView listView;
+    ArrayList<String> taskList ;//data
+    ArrayAdapter<String> taskListArrayAdapter;  //binder
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
          recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RvTaskAdapter obj = new RvTaskAdapter(todo);
          recyclerView.setAdapter(obj);
+         listView = findViewById(R.id.list_item);
+         taskList  = new ArrayList<>();
+         taskListArrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,taskList);
+        listView.setAdapter(taskListArrayAdapter);
+        searchView = findViewById(R.id.searchView);
+
 
          //Views that  are inside the popup
          setTimer = (Button) popup.findViewById(R.id.timer_button);
@@ -64,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                      @Override
                      public void onClick(View v) {
                          obj.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false));
+                         taskListArrayAdapter.add(popupEditBox.getText().toString());
                          popupEditBox.setText(null);
                          popup.dismiss();
                      }
@@ -81,6 +96,44 @@ public class MainActivity extends AppCompatActivity {
 
              }
          });
+
+         searchView.setOnSearchClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 recyclerView.setVisibility(View.GONE);
+                 listView.setVisibility(View.VISIBLE);
+             }
+         });
+
+         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+             @Override
+             public boolean onQueryTextSubmit(String query) {
+                 if(taskList.contains(query)){
+                     taskListArrayAdapter.getFilter().filter(query);
+                 }
+                 else {
+                     Toast.makeText(MainActivity.this, "no results found", Toast.LENGTH_SHORT).show();
+                 }
+                 return false;
+             }
+
+             @Override
+             public boolean onQueryTextChange(String newText) {
+                 taskListArrayAdapter.getFilter().filter(newText);
+                 return false;
+             }
+         });
+
+         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+             @Override
+             public boolean onClose() {
+                 listView.setVisibility(View.GONE);
+                 recyclerView.setVisibility(View.VISIBLE);
+                 return false;
+             }
+         });
+
+
 
 
 

@@ -45,19 +45,14 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         CheckBox cb =holder.itemView.findViewById(R.id.checkboxDone);
         cb.setChecked(todos.get(position).isChecked);
         ImageButton ib = holder.itemView.findViewById(R.id.task_Delete_Button);
-        try {
             ib.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // todo : bug on position index
-                    todos.remove(position);
-                    notifyItemRemoved(position);
+                    todos.remove(holder.getAdapterPosition());
+                    notifyDataSetChanged();
+
                 }
             });
-        }catch (Exception e){
-            todos.remove(todos.size()-1);
-            notifyItemRemoved(todos.size()-1);
-        }
 
 
     }
