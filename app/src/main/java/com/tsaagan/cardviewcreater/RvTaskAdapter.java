@@ -1,5 +1,6 @@
 package com.tsaagan.cardviewcreater;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,10 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         notifyItemInserted(todos.size()-1);
     }
 
+    public  void removeTodo(){
+
+    }
+
     @NonNull
     @Override
     public RvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,15 +49,6 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         tv.setText(todos.get(position).TaskName);
         CheckBox cb =holder.itemView.findViewById(R.id.checkboxDone);
         cb.setChecked(todos.get(position).isChecked);
-        ImageButton ib = holder.itemView.findViewById(R.id.task_Delete_Button);
-            ib.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    todos.remove(holder.getAdapterPosition());
-                    notifyDataSetChanged();
-
-                }
-            });
 
 
     }
