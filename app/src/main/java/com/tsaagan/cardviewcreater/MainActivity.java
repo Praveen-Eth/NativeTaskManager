@@ -169,7 +169,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listView.setVisibility(View.GONE);
-                //todo : when a item clicked , in recycler view , get a  filtered view .
+                recyclerView.setVisibility(View.GONE);
+                linearLayout.addView(rvTaskAdapter.filterTodo(listView.toString(),MainActivity.this));
 
 
             }

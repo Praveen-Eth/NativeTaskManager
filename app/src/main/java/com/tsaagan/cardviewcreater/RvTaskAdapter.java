@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,15 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         notifyItemInserted(todos.size()-1);
     }
 
-    public  void removeTodo(){
+    public  View filterTodo(String s,Context parents){
+
+        View view  = LayoutInflater.from(parents).inflate(R.layout.cardmodel,null);
+        TextView tv= view.findViewById(R.id.checkboxText);
+        tv.setText("gdfsg");
+
+            return view;
+
+
 
     }
 
