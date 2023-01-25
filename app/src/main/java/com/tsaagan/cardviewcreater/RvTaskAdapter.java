@@ -30,12 +30,19 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         todos.add(todo);
         notifyItemInserted(todos.size()-1);
     }
+    /**note: even this method works fine this was not the optimized way to filter data.
+     * how the method works?
+     * it just filter the data directly from List<Card_View_Properties> todos
+     * and recreate the view from recycler view.
+    */
 
-    public  View filterTodo(String s,Context parents){
+    public  View filterTodo(String s,Context parents,int position){
 
         View view  = LayoutInflater.from(parents).inflate(R.layout.cardmodel,null);
         TextView tv= view.findViewById(R.id.checkboxText);
-        tv.setText("gdfsg");
+        tv.setText(todos.get(position).TaskName);
+        CheckBox checkBox = view.findViewById(R.id.checkboxDone);
+        checkBox.setChecked(todos.get(position).isChecked);
 
             return view;
 

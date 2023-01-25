@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
-                linearLayout.addView(rvTaskAdapter.filterTodo(listView.toString(),MainActivity.this));
+                linearLayout.addView(rvTaskAdapter.filterTodo(listView.toString(),MainActivity.this,position));
 
 
             }
