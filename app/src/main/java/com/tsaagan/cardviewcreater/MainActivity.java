@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> taskList ;//data
     ArrayAdapter<String> taskListArrayAdapter;  //binder
     SearchView searchView;
+    View tempViewForSearchInRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                  recyclerView.setVisibility(View.GONE);
                  listView.setVisibility(View.VISIBLE);
              }
+
          });
 
          searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -132,8 +134,10 @@ public class MainActivity extends AppCompatActivity {
          searchView.setOnCloseListener(new SearchView.OnCloseListener() {
              @Override
              public boolean onClose() {
+                 linearLayout.removeView(tempViewForSearchInRecyclerView);
                  listView.setVisibility(View.GONE);
                  recyclerView.setVisibility(View.VISIBLE);
+
                  return false;
              }
 
@@ -165,12 +169,14 @@ public class MainActivity extends AppCompatActivity {
              }
          }).attachToRecyclerView(recyclerView);
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 listView.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
-                linearLayout.addView(rvTaskAdapter.filterTodo(listView.toString(),MainActivity.this,position));
+                tempViewForSearchInRecyclerView = rvTaskAdapter.filterTodo(listView.toString(),MainActivity.this,position);
+                linearLayout.addView(tempViewForSearchInRecyclerView);
 
 
             }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +66,12 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         tv.setText(todos.get(position).TaskName);
         CheckBox cb =holder.itemView.findViewById(R.id.checkboxDone);
         cb.setChecked(todos.get(position).isChecked);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                todos.get(holder.getAdapterPosition()).isChecked = isChecked;
+            }
+        });
 
 
     }
