@@ -7,7 +7,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
+import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -26,7 +34,12 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.ConcurrentModificationException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> taskListArrayAdapter;  //binder
     SearchView searchView;
     View tempViewForSearchInRecyclerView;
+    final static int request1 = 1;
+    String a = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +69,10 @@ public class MainActivity extends AppCompatActivity {
          fab = findViewById(R.id.floatingButton);
          Dialog popup = new Dialog(this);
          popup.setContentView(R.layout.popup_assign_task);
-         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this);
+        }
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RvTaskAdapter rvTaskAdapter = new RvTaskAdapter(todo);
          recyclerView.setAdapter(rvTaskAdapter);
          listView = findViewById(R.id.list_item);
@@ -182,9 +200,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setTimer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(2023,0,26,8,52);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Intent intent = new Intent(MainActivity.this,MyReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,1,intent,0);
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
+                //todo: need to complete ui design for set timer button;
+                Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
 
 
-
+            }
+        });
 
 
 
