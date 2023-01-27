@@ -18,6 +18,7 @@ public class NotificationHelper extends ContextWrapper {
     private NotificationManager mManager;
 
 
+
     public NotificationHelper(Context base) {
         super(base);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -37,7 +38,7 @@ public class NotificationHelper extends ContextWrapper {
         return mManager;
     }
 
-    public NotificationCompat.Builder getChannelNotification(String title, String body, int icon){
+    public NotificationCompat.Builder getChannelNotification(String title,String body,int icon){
         return new NotificationCompat.Builder(getApplicationContext(),channelId)
                 .setContentTitle(title)
                 .setContentText(body)

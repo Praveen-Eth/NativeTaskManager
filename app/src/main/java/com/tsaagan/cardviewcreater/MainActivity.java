@@ -28,7 +28,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.SearchView;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab ;
     RecyclerView recyclerView;
     EditText popupEditBox;
-    Button setTimer,flag;
+    Button setTimerButton,flag;
     ImageButton popupExit;
     ListView listView;
     ArrayList<String> taskList ;//data
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
          fab = findViewById(R.id.floatingButton);
          Dialog popup = new Dialog(this);
          popup.setContentView(R.layout.popup_assign_task);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             DatePickerDialog datePickerDialog = new DatePickerDialog(this);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -83,10 +85,18 @@ public class MainActivity extends AppCompatActivity {
 
 
          //Views that  are inside the popup
-         setTimer = (Button) popup.findViewById(R.id.timer_button);
+         setTimerButton = (Button) popup.findViewById(R.id.timer_button);
          flag = (Button) popup.findViewById(R.id.flag_button);
          popupEditBox = (EditText) popup.findViewById(R.id.edit_text);
          popupExit  = (ImageButton) popup.findViewById(R.id.dismiss1);
+
+         //Views that are inside the setTimer Dialog
+        Dialog setTimer = new Dialog(this);
+        ImageButton datePopup = setTimer.findViewById(R.id.datePopup);
+        NumberPicker hour_picker = setTimer.findViewById(R.id.hour_picker);
+        NumberPicker minute_picker = setTimer.findViewById(R.id.minute_picker);
+        Switch AmPmCatcher  = setTimer.findViewById(R.id.noon_picker);
+        Button setButton  = setTimer.findViewById(R.id.time_set_button);
 
 
 
@@ -200,18 +210,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setTimer.setOnClickListener(new View.OnClickListener() {
+        setTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                calendar.set(2023,0,26,8,52);
+                calendar.set(2023,0,27,8,2,20);
                 AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Intent intent = new Intent(MainActivity.this,MyReceiver.class);
+                MyReceiver myReceiver = new MyReceiver();
+                Intent intent  = new Intent(MainActivity.this,MyReceiver.class);
+                intent.putExtra("title","You Received a Notification") ;
+                intent.putExtra("body","The Task You Assigned will reached Dead end😉") ;
+                sendBroadcast(intent);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,1,intent,0);
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
                 //todo: need to complete ui design for set timer button;
                 Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
-                System.out.println("hello");
+
 
             }
         });
