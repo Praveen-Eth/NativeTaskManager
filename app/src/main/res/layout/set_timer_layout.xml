@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:background="@color/cardview_shadow_start_color"
+    >
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_gravity="center"
+        android:layout_height="40dp"
+        android:foreground="@android:drawable/ic_menu_my_calendar"
+        android:background="#403E3E"
+        android:id="@+id/datePopup"
+        />
+
+    <NumberPicker
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/hour_picker"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginStart="5dp"
+        />
+    <NumberPicker
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/minute_picker"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_marginEnd="5dp"
+        />
+
+
+    <Switch
+        android:id="@+id/noon_picker"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="AM/PM"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Button
+        android:id="@+id/time_set_button"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="set"
+        android:textColor="@color/black"
+        android:elevation="10dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#A59797" />
+
+
+
+</LinearLayout>
