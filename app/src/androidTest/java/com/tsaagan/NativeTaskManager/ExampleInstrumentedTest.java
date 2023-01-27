@@ -1,4 +1,4 @@
-package com.tsaagan.cardviewcreater;
+package com.tsaagan.NativeTaskManager;
 
 import android.content.Context;
 

@@ -1,4 +1,4 @@
-package com.tsaagan.cardviewcreater;
+package com.tsaagan.NativeTaskManager;
 
 public class Card_View_Properties {
     String TaskName ;

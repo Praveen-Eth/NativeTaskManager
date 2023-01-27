@@ -1,4 +1,4 @@
-package com.tsaagan.cardviewcreater;
+package com.tsaagan.NativeTaskManager;
 
 import org.junit.Test;
 

@@ -1,11 +1,10 @@
-package com.tsaagan.cardviewcreater;
+package com.tsaagan.NativeTaskManager;
 
 import android.annotation.TargetApi;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.graphics.drawable.Icon;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
