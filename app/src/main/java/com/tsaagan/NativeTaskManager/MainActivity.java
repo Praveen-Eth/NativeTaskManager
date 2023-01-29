@@ -1,6 +1,7 @@
 package com.tsaagan.NativeTaskManager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -27,9 +29,12 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.SearchView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     View tempViewForSearchInRecyclerView;
     final static int request1 = 1;
     String a = "0";
+    int code = 0;
+     long NotificationTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
          flag = (Button) popup.findViewById(R.id.flag_button);
          popupEditBox = (EditText) popup.findViewById(R.id.edit_text);
          popupExit  = (ImageButton) popup.findViewById(R.id.dismiss1);
+        TextView textView = popup.findViewById(R.id.text2);
 
          //Views that are inside the setTimer Dialog
         Dialog setTimer = new Dialog(this);
+        setTimer.setContentView(R.layout.set_timer_layout);
         ImageButton datePopup = setTimer.findViewById(R.id.datePopup);
         NumberPicker hour_picker = setTimer.findViewById(R.id.hour_picker);
         NumberPicker minute_picker = setTimer.findViewById(R.id.minute_picker);
@@ -105,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                      public void onClick(View v) {
                          rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false));
                          taskListArrayAdapter.add (popupEditBox.getText().toString());
+                         setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime);
                          popupEditBox.setText(null);
                          popup.dismiss();
                      }
@@ -205,18 +215,52 @@ public class MainActivity extends AppCompatActivity {
         setTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(2023,0,27,8,2,20);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                MyReceiver myReceiver = new MyReceiver();
-                Intent intent  = new Intent(MainActivity.this,MyReceiver.class);
-                intent.putExtra("title","You Received a Notification") ;
-                intent.putExtra("body","The Task You Assigned will reached Dead end😉") ;
-                sendBroadcast(intent);
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,1,intent,0);
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-                //todo: need to complete ui design for set timer button;
-                Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
+                 int[] mYear = {0};
+                 int[] mMonth = {0};
+                 int[] mDayOfMonth = {0};
+                 int[] mHour = {0};
+                 int[] mMinute = {0};
+                setTimer.show();
+              datePopup.setOnClickListener(new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onClick(View v) {
+                        DatePickerDialog datePickerDialog  = new DatePickerDialog(MainActivity.this);
+                        datePickerDialog.show();
+                        datePickerDialog.setOnDateSetListener(new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                mYear[0] = year;
+                                mMonth[0] = month;
+                                mDayOfMonth[0] =  dayOfMonth;
+                            }
+                        });
+                    }
+                });
+                hour_picker.setMaxValue(12);
+                hour_picker.setMinValue(1);
+                minute_picker.setMinValue(0);
+                minute_picker.setMaxValue(59);
+                setButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(mYear[0]==0 ){
+                            Toast.makeText(MainActivity.this, "please set date", Toast.LENGTH_SHORT).show();
+                        }else{
+
+                            mHour[0] = hour_picker.getValue();
+                            mMinute[0] = minute_picker.getValue();
+                            setTimer.dismiss();
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(mYear[0], mMonth[0], mDayOfMonth[0], mHour[0], mMinute[0],0);
+                            NotificationTime = calendar.getTimeInMillis();
+
+                            Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
+                            String time  = mYear[0] +"|"+ mMonth[0] +"|"+ mDayOfMonth[0] +"|"+DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
+                            textView.setText(time);
+                        }
+                    }
+                });
 
 
             }
@@ -225,5 +269,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+    }
+    public void setNotification(String title, String body,int requestCode,long reminder){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(MainActivity.this,MyReceiver.class);
+        intent.putExtra("title",title);
+        intent.putExtra("body",body);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,requestCode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,reminder,pendingIntent);
+        code++;
     }
 }

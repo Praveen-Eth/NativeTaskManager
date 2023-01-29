@@ -24,7 +24,7 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String title = intent.getStringExtra("title");
         String body = intent.getStringExtra("body");
-        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+        NotificationManager notificationManager =  context.getSystemService(NotificationManager.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel("channelId", "My Notifications", NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(notificationChannel);
