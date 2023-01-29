@@ -33,6 +33,16 @@
             android:textColor="@color/black"
 
             />
+
+        <TextView
+            android:id="@+id/reminderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remaining time : "
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="4dp"
+            android:layout_marginStart="75dp"
+            />
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

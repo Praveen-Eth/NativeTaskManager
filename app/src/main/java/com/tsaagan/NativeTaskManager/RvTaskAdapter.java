@@ -38,6 +38,8 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         tv.setText(todos.get(position).TaskName);
         CheckBox checkBox = view.findViewById(R.id.checkboxDone);
         checkBox.setChecked(todos.get(position).isChecked);
+        TextView reminderView = view.findViewById(R.id.reminderTextView);
+        reminderView.setText("deadline: "+todos.get(position).ReminderTime);
 
             return view;
 
@@ -66,6 +68,8 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
                 todos.get(holder.getAdapterPosition()).isChecked = isChecked;
             }
         });
+        TextView reminderView = holder.itemView.findViewById(R.id.reminderTextView);
+        reminderView.setText("deadline: "+todos.get(position).ReminderTime);
 
 
     }

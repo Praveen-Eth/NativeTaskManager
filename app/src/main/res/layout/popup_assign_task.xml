@@ -10,7 +10,7 @@
     android:layout_marginBottom="10dp"
     android:layout_gravity="bottom"
     android:elevation="95dp"
-    android:background="@drawable/card_elevation">
+    android:background="@drawable/cardviewfordialog">
 
     <ImageButton
         android:id="@+id/dismiss1"
@@ -29,8 +29,10 @@
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:elevation="10dp"
-        android:hint="Assign Task Here"
+        android:hint="assign task here"
         android:padding="8dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/home_page_background"
 
         android:inputType="textCapSentences"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +45,7 @@
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
+        android:textColor="@color/black"
         android:background="@drawable/card_elevation"
         android:text="Set Timer"
         android:textSize="8dp"
@@ -57,8 +60,9 @@
         android:layout_height="35dp"
         android:layout_gravity="right"
         android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
         android:background="@drawable/card_elevation"
-        android:text="Flag"
+        android:text="Enter"
         android:textSize="8dp"
         app:icon="@android:drawable/ic_menu_myplaces"
         app:layout_constraintBottom_toBottomOf="parent"
