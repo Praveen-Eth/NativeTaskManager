@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -52,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> taskListArrayAdapter;  //binder
     SearchView searchView;
     View tempViewForSearchInRecyclerView;
-    final static int request1 = 1;
-    String a = "0";
     int code = 0;
      long NotificationTime = 0;
 
@@ -114,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                      public void onClick(View v) {
                          rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false));
                          taskListArrayAdapter.add (popupEditBox.getText().toString());
-                         setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime);
+                         setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          popupEditBox.setText(null);
                          popup.dismiss();
                      }
@@ -187,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
              public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                  Card_View_Properties deletedView  =   rvTaskAdapter.todos.get(viewHolder.getAdapterPosition());
                  int position  = viewHolder.getAdapterPosition();
+                 cancelNotification(position);
                  taskListArrayAdapter.remove(deletedView.TaskName);
                  taskListArrayAdapter.notifyDataSetChanged();
                  rvTaskAdapter.todos.remove(position);
@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                             calendar.set(mYear[0], mMonth[0], mDayOfMonth[0], mHour[0], mMinute[0],0);
                             NotificationTime = calendar.getTimeInMillis();
 
-                            Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
                             String time  = mYear[0] +"|"+ mMonth[0] +"|"+ mDayOfMonth[0] +"|"+DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
                             textView.setText(time);
                         }
@@ -273,13 +273,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void setNotification(String title, String body,int requestCode,long reminder){
+    public void setNotification(String title, String body,int requestCode,long reminder,int notificationId){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this,MyReceiver.class);
         intent.putExtra("title",title);
         intent.putExtra("body",body);
+        intent.putExtra("notificationId",notificationId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,requestCode,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP,reminder,pendingIntent);
         code++;
+    }
+    public void cancelNotification(int Id){
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(1);
+
     }
 }

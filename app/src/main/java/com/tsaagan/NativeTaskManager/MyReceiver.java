@@ -24,6 +24,7 @@ public class MyReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String title = intent.getStringExtra("title");
         String body = intent.getStringExtra("body");
+        int notificationId = intent.getIntExtra("notificationId",123456);
         NotificationManager notificationManager =  context.getSystemService(NotificationManager.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel("channelId", "My Notifications", NotificationManager.IMPORTANCE_HIGH);
@@ -33,6 +34,6 @@ public class MyReceiver extends BroadcastReceiver {
                 .setContentTitle(title)
                 .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
                 .setContentText(body);
-        notificationManager.notify(1, notificationBuilder.build());
+        notificationManager.notify(notificationId, notificationBuilder.build());
     }
 }
