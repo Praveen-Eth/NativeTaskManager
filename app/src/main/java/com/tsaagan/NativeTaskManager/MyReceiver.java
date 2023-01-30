@@ -2,6 +2,7 @@ package com.tsaagan.NativeTaskManager;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,11 @@ public class MyReceiver extends BroadcastReceiver {
                 .setContentTitle(title)
                 .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
                 .setContentText(body);
+        //if user clicks notification , intent -> mainActivity.
+        Intent intent1 = new Intent(context,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent1,PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(pendingIntent);
+
         notificationManager.notify(1, notificationBuilder.build());
     }
 }
