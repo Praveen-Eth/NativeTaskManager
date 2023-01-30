@@ -41,6 +41,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab ;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
      long NotificationTime = 0;
      String ReminderTime;
      boolean isTimerSet = false;
+     int[] cardColor  = new int[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
         Switch AmPmCatcher  = setTimer.findViewById(R.id.noon_picker);
         Button setButton  = setTimer.findViewById(R.id.time_set_button);
 
+        cardColor[0] = R.color.black;
+        cardColor[1] =  R.color.green;
+        cardColor[2] =  R.color.blue;
+        cardColor[3] =  R.color.orange;
+        cardColor[4] =  R.color.violet;
+        cardColor[5] =  R.color.yellow;
+        cardColor[6] =  R.color.red;
+
 
 
 
@@ -115,13 +125,15 @@ public class MainActivity extends AppCompatActivity {
                  flag.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
+                         Random randomColor = new Random();
+
                          if(!isTimerSet){
-                             rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,"not set"));
+                             rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,"not set",cardColor[randomColor.nextInt(7)]),MainActivity.this);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              //setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          }else{
 
-                             rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,ReminderTime));
+                             rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,ReminderTime,cardColor[randomColor.nextInt(7)]),MainActivity.this);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          }

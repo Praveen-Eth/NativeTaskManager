@@ -1,5 +1,7 @@
 package com.tsaagan.NativeTaskManager;
 
+
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -16,14 +20,16 @@ import java.util.List;
 public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
 
     public  List<Card_View_Properties> todos ;
+    public  Context context;
 
     public RvTaskAdapter(List<Card_View_Properties> todos) {
         this.todos = todos;
     }
 
-    public void addTodo(Card_View_Properties todo){
+    public void addTodo(Card_View_Properties todo,Context context){
         todos.add(todo);
         notifyItemInserted(todos.size()-1);
+        this.context = context;
     }
     /**note: even this method works fine this was not the optimized way to filter data.
      * how the method works?
@@ -40,6 +46,9 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         checkBox.setChecked(todos.get(position).isChecked);
         TextView reminderView = view.findViewById(R.id.reminderTextView);
         reminderView.setText("deadline: "+todos.get(position).ReminderTime);
+        CardView cardViewColor = view.findViewById(R.id.cardColor);
+        cardViewColor.setCardBackgroundColor(ContextCompat.getColor(context,todos.get(position).cardViewColor ));
+
 
             return view;
 
@@ -70,6 +79,8 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         });
         TextView reminderView = holder.itemView.findViewById(R.id.reminderTextView);
         reminderView.setText("deadline: "+todos.get(position).ReminderTime);
+        CardView cardViewColor = holder.itemView.findViewById(R.id.cardColor);
+        cardViewColor.setCardBackgroundColor(ContextCompat.getColor(context,todos.get(position).cardViewColor ));
 
 
     }

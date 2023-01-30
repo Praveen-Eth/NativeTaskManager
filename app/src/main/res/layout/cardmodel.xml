@@ -11,10 +11,10 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     app:cardCornerRadius="16dp"
-    android:foreground="@color/black"
-    android:layout_marginStart="18dp"
+
+    android:layout_marginStart="20dp"
     android:layout_marginEnd="16dp"
-    android:layout_marginTop="14dp"
+    android:layout_marginTop="12dp"
     />
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -50,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Remaining time : "
+            android:textColor="@color/black"
             android:layout_gravity="bottom"
             android:layout_marginEnd="4dp"
             android:layout_marginStart="75dp"

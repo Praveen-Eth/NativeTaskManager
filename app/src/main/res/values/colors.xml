@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="home_page_background">#C0B8D5</color>
     <color name="transparent">#00FFFF00</color>
+    <color name="orange">#FF5722</color>
+    <color name="green">#2DEA35</color>
+    <color name="yellow">#F3DB0B</color>
+    <color name="blue">#03A9F4</color>
+    <color name="red">#FF0000</color>
+    <color name="violet">#630FFA</color>
+
 </resources>
