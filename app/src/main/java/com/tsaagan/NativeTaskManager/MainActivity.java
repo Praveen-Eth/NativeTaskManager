@@ -261,18 +261,23 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 });
-                hour_picker.setMaxValue(12);
-                hour_picker.setMinValue(1);
+                hour_picker.setMaxValue(11);
+                hour_picker.setMinValue(0);
                 minute_picker.setMinValue(0);
                 minute_picker.setMaxValue(59);
+
                 setButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(mYear[0]==0 ){
                             Toast.makeText(MainActivity.this, "please set date", Toast.LENGTH_SHORT).show();
                         }else{
+                            if(AmPmCatcher.isChecked()){
+                                mHour[0] = 12+hour_picker.getValue();
+                            }else{
+                                mHour[0] = hour_picker.getValue();
+                            }
 
-                            mHour[0] = hour_picker.getValue();
                             mMinute[0] = minute_picker.getValue();
                             setTimer.dismiss();
                             Calendar calendar = Calendar.getInstance();
