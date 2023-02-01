@@ -3,6 +3,7 @@ package com.tsaagan.NativeTaskManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -80,10 +82,12 @@ public class MainActivity extends AppCompatActivity {
         RvTaskAdapter rvTaskAdapter = new RvTaskAdapter(todo);
          recyclerView.setAdapter(rvTaskAdapter);
          listView = findViewById(R.id.list_item);
+
          taskList  = new ArrayList<>();
          taskListArrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,taskList);
         listView.setAdapter(taskListArrayAdapter);
-        searchView = findViewById(R.id.searchView);
+
+        searchView = (SearchView) findViewById(R.id.searchView);
 
 
          //Views that  are inside the popup
@@ -135,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
                              rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,ReminderTime,cardColor[randomColor.nextInt(7)]),MainActivity.this);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
-                             setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
+                             setNotification("You May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
+                             isTimerSet = false;
                          }
                          popupEditBox.setText(null);
                          popup.dismiss();
@@ -214,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                  taskListArrayAdapter.notifyDataSetChanged();
                  rvTaskAdapter.todos.remove(position);
                  rvTaskAdapter.notifyDataSetChanged();
+                 System.out.println(position);
+                 cancelNotification(position+1);
 
                  Toast.makeText(MainActivity.this, deletedView.TaskName + " task removed", Toast.LENGTH_SHORT).show();
 
@@ -313,8 +320,7 @@ public class MainActivity extends AppCompatActivity {
         code++;
     }
     public void cancelNotification(int Id){
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(Id);
+
 
     }
 }
