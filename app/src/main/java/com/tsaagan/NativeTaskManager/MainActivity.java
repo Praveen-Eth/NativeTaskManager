@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
          flag = (Button) popup.findViewById(R.id.flag_button);
          popupEditBox = (EditText) popup.findViewById(R.id.edit_text);
          popupExit  = (ImageButton) popup.findViewById(R.id.dismiss1);
-        TextView textView = popup.findViewById(R.id.text2);
+        TextView reminderTextView = popup.findViewById(R.id.text2);
 
          //Views that are inside the setTimer Dialog
         Dialog setTimer = new Dialog(this);
@@ -110,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
         cardColor[5] =  R.color.yellow;
         cardColor[6] =  R.color.red;
 
-
+        DbHandler localStorage = new DbHandler(this);
 
 
          fab.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
                  ReminderTime = "not set";
-                 textView.setText("");
+                 reminderTextView.setText("");
                  popup.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                  popup.getWindow().setGravity(Gravity.BOTTOM);
                  popup.getWindow().setBackgroundDrawableResource(R.color.transparent);
@@ -129,11 +129,13 @@ public class MainActivity extends AppCompatActivity {
 
                          if(!isTimerSet){
                              rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,"not set",cardColor[randomColor.nextInt(7)]),MainActivity.this);
+                             localStorage.addData(popupEditBox.getText().toString(),null,false);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              //setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          }else{
 
                              rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,ReminderTime,cardColor[randomColor.nextInt(7)]),MainActivity.this);
+                             localStorage.addData(popupEditBox.getText().toString(),ReminderTime,false);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          }
@@ -286,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
                             //Toast.makeText(MainActivity.this, "alarm set to"+ DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime()), Toast.LENGTH_SHORT).show();
                             ReminderTime = mYear[0] +"|"+ (mMonth[0] +1) +"|"+ mDayOfMonth[0] +"|"+DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
-                            textView.setText(ReminderTime);
+                            reminderTextView.setText(ReminderTime);
                         }
                     }
                 });
