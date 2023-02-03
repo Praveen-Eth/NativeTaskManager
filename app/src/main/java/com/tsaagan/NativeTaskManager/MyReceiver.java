@@ -7,16 +7,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.Toast;
 
 
 import androidx.core.app.NotificationCompat;
 
 public class MyReceiver extends BroadcastReceiver {
 
+    NotificationManager notificationManager;
 
 
 
-    public MyReceiver() {
+    public void cancel (int id){
+        notificationManager.cancel(id);
+        //todo: incomplete cancel function for notification
     }
 
 
@@ -25,7 +29,8 @@ public class MyReceiver extends BroadcastReceiver {
         String title = intent.getStringExtra("title");
         String body = intent.getStringExtra("body");
         int notificationId = intent.getIntExtra("notificationId",123456);
-        NotificationManager notificationManager =  context.getSystemService(NotificationManager.class);
+
+        notificationManager =  context.getSystemService(NotificationManager.class);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notificationChannel = new NotificationChannel("channelId", "My Notifications", NotificationManager.IMPORTANCE_HIGH);

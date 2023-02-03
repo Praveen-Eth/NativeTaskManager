@@ -50,6 +50,7 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         cardViewColor.setCardBackgroundColor(ContextCompat.getColor(context,todos.get(position).cardViewColor ));
 
 
+
             return view;
 
 
@@ -81,6 +82,8 @@ public class RvTaskAdapter extends RecyclerView.Adapter<RvViewHolder> {
         reminderView.setText("deadline: "+todos.get(position).ReminderTime);
         CardView cardViewColor = holder.itemView.findViewById(R.id.cardColor);
         cardViewColor.setCardBackgroundColor(ContextCompat.getColor(context,todos.get(position).cardViewColor ));
+        CardView cv = holder.itemView.findViewById(R.id.layer_card);
+        cv.setBackgroundResource(R.drawable.view_stroke);
 
 
     }
