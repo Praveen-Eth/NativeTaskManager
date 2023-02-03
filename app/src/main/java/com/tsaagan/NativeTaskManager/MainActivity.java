@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     View tempViewForSearchInRecyclerView;
     int code = 1;
+    int notificationId = 1;
      long NotificationTime = 0;
      String ReminderTime;
      boolean isTimerSet = false;
@@ -105,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         NumberPicker minute_picker = setTimer.findViewById(R.id.minute_picker);
         Switch AmPmCatcher  = setTimer.findViewById(R.id.noon_picker);
         Button setButton  = setTimer.findViewById(R.id.time_set_button);
+        CardView cardView3 = findViewById(R.id.cardView3);
 
         cardColor[0] = R.color.black;
         cardColor[1] =  R.color.green;
@@ -115,7 +118,11 @@ public class MainActivity extends AppCompatActivity {
         cardColor[6] =  R.color.red;
 
         DbHandler localStorage = new DbHandler(this);
-
+        cardView3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
 
          fab.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -133,13 +140,14 @@ public class MainActivity extends AppCompatActivity {
 
                          if(!isTimerSet){
                              rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,"not set",cardColor[randomColor.nextInt(7)]),MainActivity.this);
-                             localStorage.addData(popupEditBox.getText().toString(),null,false);
+                             localStorage.addData(popupEditBox.getText().toString(),null,false,null);
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              //setNotification("you May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                          }else{
 
                              rvTaskAdapter.addTodo(new Card_View_Properties(popupEditBox.getText().toString(),false,ReminderTime,cardColor[randomColor.nextInt(7)]),MainActivity.this);
-                             localStorage.addData(popupEditBox.getText().toString(),ReminderTime,false);
+                             localStorage.addData(popupEditBox.getText().toString(),ReminderTime,false, String.valueOf(notificationId));
+                             notificationId++;
                              taskListArrayAdapter.add (popupEditBox.getText().toString());
                              setNotification("You May Have InComplete Task✨",popupEditBox.getText().toString(),code,NotificationTime,code);
                              isTimerSet = false;
