@@ -11,7 +11,7 @@ SQlite Database | Recycler view , Date Time Api's | swipe to delete | notificati
 ![Phone Screenshot 3](https://user-images.githubusercontent.com/120575133/216246190-7aa67e3e-1612-405b-a272-587ef7d709ed.jpg)
 
 # Update soon! 
-update contains : Sqlite database , news banners, progressive graphs (in develpoment phase).
+update contains :  news banners, progressive graphs (in develpoment phase).
 
 # Download And Test App here:
 
