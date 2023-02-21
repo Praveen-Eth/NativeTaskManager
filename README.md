@@ -1,5 +1,5 @@
 # NativeTaskManager
-recreated todo app
+ todo app
 Assign tasks | create reminders | have fun 🤸‍♂️🚴‍♂️
 
 ![Phone Screenshot 1](https://user-images.githubusercontent.com/120575133/216245575-d6155554-68fe-47be-91fb-b47cca08ca88.jpg)
